@@ -13,6 +13,7 @@
 		D999E4292A153D0D003F53FE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D999E4282A153D0D003F53FE /* Preview Assets.xcassets */; };
 		D999E4302A1540B1003F53FE /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D999E42F2A1540B1003F53FE /* Secrets.swift */; };
 		D999E4322A155D44003F53FE /* WeatherApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D999E4312A155D44003F53FE /* WeatherApiResponse.swift */; };
+		D999E4372A156F40003F53FE /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D999E4362A156F40003F53FE /* WeatherViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		D999E4282A153D0D003F53FE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D999E42F2A1540B1003F53FE /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		D999E4312A155D44003F53FE /* WeatherApiResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherApiResponse.swift; sourceTree = "<group>"; };
+		D999E4362A156F40003F53FE /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 		D999E4352A156E21003F53FE /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				D999E4362A156F40003F53FE /* WeatherViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -167,6 +170,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D999E4372A156F40003F53FE /* WeatherViewModel.swift in Sources */,
 				D999E4322A155D44003F53FE /* WeatherApiResponse.swift in Sources */,
 				D999E4242A153D0C003F53FE /* ContentView.swift in Sources */,
 				D999E4302A1540B1003F53FE /* Secrets.swift in Sources */,

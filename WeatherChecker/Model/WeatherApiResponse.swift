@@ -8,6 +8,7 @@
 import Foundation
 
 struct WeatherApiResponse: Codable {
+
     struct Location: Codable {
         let name: String
         let region: String

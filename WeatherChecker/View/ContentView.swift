@@ -8,18 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var city: String = "Batavia"
-    @State private var weather: String = ""
+    @ObservedObject var viewModel = WeatherViewModel()
     
     var body: some View {
         VStack {
             HStack {
-                TextField("Enter a city", text: $city)
+                TextField("Enter a city", text: $viewModel.location)
                     .padding()
                     .border(.secondary)
                 
                 Button(action: {
-                    fetchWeather()
+                    viewModel.fetchWeather()
                 }, label: {
                     Text("Get Weather")
                         .foregroundColor(.white)
@@ -28,44 +27,19 @@ struct ContentView: View {
                 })
             }
             Spacer()
-            Text(weather)
+            if viewModel.weather != nil {
+                HStack {
+                    Spacer()
+                    Text("\(viewModel.weather?.location.name ?? ""), \(viewModel.weather?.location.region ?? "")")
+                    Spacer()
+                    Text("\(viewModel.weather?.current.condition.text ?? ""), \(String(format: "%.1f", viewModel.weather?.current.temp_f ?? 0.0)) F")
+                    Spacer()
+                }
+            }
             Spacer()
             
         }
         .padding()
-    }
-    
-    func fetchWeather() {
-        guard let encodedCity = city.trimmingCharacters(in: .whitespacesAndNewlines).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
-            return
-        }
-        
-        guard let url = URL(string: "https://api.weatherapi.com/v1/current.json?key=\(Secrets.weatherApiApiKey)&q=\(encodedCity)&aqi=no") else {
-            print("Invlaid URL")
-            return
-        }
-
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let error = error {
-                print("There was an error: \(error)")
-                return
-            }
-            
-            guard let data = data, error == nil else {
-                print("There was an error setting the data.")
-                return
-            }
-
-            do {
-                let decoder = JSONDecoder()
-                let decodedJson = try decoder.decode(WeatherApiResponse.self, from: data)
-                weather = "The weather in \(city) is \(decodedJson.current.condition.text) (\(decodedJson.current.temp_f) F)"
-            } catch {
-                print("JSON decoding error: \(error.localizedDescription)")
-            }
-        }
-        
-        task.resume()
     }
 
 }

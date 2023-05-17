@@ -54,5 +54,3 @@ struct WeatherApiResponse: Codable {
     let location: Location
     let current: Current
 }
-
-

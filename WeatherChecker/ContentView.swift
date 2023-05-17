@@ -13,27 +13,34 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            Text("WeatherChecker!")
-            TextField("Enter a city...", text: $city)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
-            Button(action: {
-                fetchWeather()
-            }, label: {
-                Text("Get Weather")
-                    .foregroundColor(.white)
+            HStack {
+                TextField("Enter a city", text: $city)
                     .padding()
-                    .background(Color.blue)
-                    .cornerRadius(10)
-            })
-            
+                    .border(.secondary)
+                
+                Button(action: {
+                    fetchWeather()
+                }, label: {
+                    Text("Get Weather")
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.blue)
+                })
+            }
+            Spacer()
             Text(weather)
+            Spacer()
             
         }
+        .padding()
     }
     
     func fetchWeather() {
-        guard let url = URL(string: "https://api.weatherapi.com/v1/current.json?key=\(Secrets.weatherApiApiKey)&q=\(city.trimmingCharacters(in: .whitespacesAndNewlines))&aqi=no") else {
+        guard let encodedCity = city.trimmingCharacters(in: .whitespacesAndNewlines).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+            return
+        }
+        
+        guard let url = URL(string: "https://api.weatherapi.com/v1/current.json?key=\(Secrets.weatherApiApiKey)&q=\(encodedCity)&aqi=no") else {
             print("Invlaid URL")
             return
         }
@@ -52,13 +59,10 @@ struct ContentView: View {
             do {
                 let decoder = JSONDecoder()
                 let decodedJson = try decoder.decode(WeatherApiResponse.self, from: data)
-                weather = "The weather in \(city) is \(decodedJson.current.condition.text)"
-            
-                
+                weather = "The weather in \(city) is \(decodedJson.current.condition.text) (\(decodedJson.current.temp_f) F)"
             } catch {
                 print("JSON decoding error: \(error.localizedDescription)")
             }
-
         }
         
         task.resume()

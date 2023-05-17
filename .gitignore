@@ -1,3 +1,5 @@
 *.xcconfig
 xcschememanagement.plist
+*.xcworkspace
+xcuserdata/
 

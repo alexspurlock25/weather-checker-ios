@@ -28,14 +28,44 @@ struct ContentView: View {
             })
             
             Text(weather)
-                .padding()
             
         }
     }
     
     func fetchWeather() {
-        weather = "Current weather in \(city): "
+        guard let url = URL(string: "https://api.weatherapi.com/v1/current.json?key=\(Secrets.weatherApiApiKey)&q=\(city.trimmingCharacters(in: .whitespacesAndNewlines))&aqi=no") else {
+            print("Invlaid URL")
+            return
+        }
+
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                print("There was an error: \(error)")
+                return
+            }
+            
+            guard let data = data, error == nil else {
+                print("There was an error setting the data.")
+                return
+            }
+
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+                let current = json["current"] as? [String: Any],
+                   let condition = current["condition"] as? [String: Any],
+                   let conditionText = condition["text"] as? String {
+                    weather = "The weather in \(city) is \(conditionText)"
+                }
+                
+            } catch {
+                print("JSON decoding error: \(error.localizedDescription)")
+            }
+
+        }
+        
+        task.resume()
     }
+
 }
 
 struct ContentView_Previews: PreviewProvider {

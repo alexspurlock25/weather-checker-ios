@@ -8,11 +8,33 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var city: String = ""
+    @State private var weather: String = ""
+    
     var body: some View {
         VStack {
-            Text("Hello, world!")
+            Text("WeatherChecker!")
+            TextField("Enter a city...", text: $city)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+            Button(action: {
+                fetchWeather()
+            }, label: {
+                Text("Get Weather")
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.blue)
+                    .cornerRadius(10)
+            })
+            
+            Text(weather)
+                .padding()
+            
         }
-        .padding()
+    }
+    
+    func fetchWeather() {
+        weather = "Current weather in \(city): "
     }
 }
 

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var city: String = ""
+    @State private var city: String = "Batavia"
     @State private var weather: String = ""
     
     var body: some View {
@@ -50,12 +50,10 @@ struct ContentView: View {
             }
 
             do {
-                if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
-                let current = json["current"] as? [String: Any],
-                   let condition = current["condition"] as? [String: Any],
-                   let conditionText = condition["text"] as? String {
-                    weather = "The weather in \(city) is \(conditionText)"
-                }
+                let decoder = JSONDecoder()
+                let decodedJson = try decoder.decode(WeatherApiResponse.self, from: data)
+                weather = "The weather in \(city) is \(decodedJson.current.condition.text)"
+            
                 
             } catch {
                 print("JSON decoding error: \(error.localizedDescription)")

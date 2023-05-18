@@ -34,7 +34,11 @@ class WeatherViewModel: ObservableObject {
 
             do {
                 let decoder = JSONDecoder()
-                self.weather = try decoder.decode(WeatherApiResponse.self, from: data)
+                let response = try decoder.decode(WeatherApiResponse.self, from: data)
+                
+                DispatchQueue.main.async {
+                    self.weather = response
+                }
             } catch {
                 print("JSON decoding error: \(error.localizedDescription)")
             }

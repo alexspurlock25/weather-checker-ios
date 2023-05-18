@@ -15,4 +15,4 @@ After cloning the project and setting up the env variable, the project should wo
 
 ## Images
 
-![Home View](https://github.com/alexspurlock25/weather-checker-swiftui/blob/main/ProjectScreenshots/homeview.png)
+![Home View](/ProjectScreenshots/homeview.png)
